@@ -1,0 +1,29 @@
+<configuration>
+
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+
+	<springProperty scope="context" name="appname"
+		source="spring.application.name" />
+
+	<appender name="file"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>logs/${PROJECT_ID}.json</File>
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<maxIndex>10</maxIndex>
+			<FileNamePattern>logs/${PROJECT_ID}.json.%i</FileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>16MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	
+	<root level="INFO">
+		<appender-ref ref="file" />
+		<appender-ref ref="CONSOLE" />
+	</root>
+
+</configuration>
